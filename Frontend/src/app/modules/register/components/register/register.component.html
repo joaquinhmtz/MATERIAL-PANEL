@@ -1,0 +1,63 @@
+<div class="wrapper-register flex-center-center">
+    <mat-card class="container-card-register">
+        <mat-card-header>
+            <mat-toolbar class="full-width text-center mb-30" color="primary">
+                <span>Crear cuenta</span>
+            </mat-toolbar>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="form-register">
+                <form>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Nombre </mat-label>
+                        <input matInput type="text" placeholder="Ej. Luis Ernesto">
+                    </mat-form-field>
+                    <mat-form-field class="widthHalf mr-5" appearance="fill">
+                        <mat-label>Apellido paterno </mat-label>
+                        <input matInput type="text" placeholder="Ej. Sanchéz">
+                    </mat-form-field>
+                    <mat-form-field class="widthHalf" appearance="fill">
+                        <mat-label>Apellido materno </mat-label>
+                        <input matInput type="text" placeholder="Ej. López">
+                    </mat-form-field>
+                    <mat-form-field class="widthHalf mr-5" appearance="fill">
+                        <mat-label>Género</mat-label>
+                        <mat-select name="food">
+                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{food.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="widthHalf" appearance="fill">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Correo electrónico </mat-label>
+                        <input matInput type="email" placeholder="Ej. susana.gomez@hotmail.com">
+                    </mat-form-field>
+                    <mat-form-field class="widthHalf mr-5" appearance="fill">
+                        <mat-label>Contraseña </mat-label>
+                        <input matInput [type]="flags.hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="flags.hide = !flags.hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="flags.hide">
+                            <mat-icon>{{flags.hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="widthHalf" appearance="fill">
+                        <mat-label>Confirmar contraseña </mat-label>
+                        <input matInput [type]="flags.hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="flags.hide = !flags.hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="flags.hide">
+                            <mat-icon>{{flags.hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </form>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="mb-20" align="end">
+            <button [routerLink]="['/login']" mat-raised-button style="margin-right: 5px;">Regresar</button>
+            <button mat-raised-button color="primary" style="margin-right: 5px;">Guardar</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

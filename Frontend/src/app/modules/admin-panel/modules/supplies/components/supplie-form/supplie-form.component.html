@@ -1,0 +1,66 @@
+<mat-card>
+    <mat-card-header>
+        Nuevo producto
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div>
+            <form [formGroup]="SupplieForm">
+                <fieldset>
+                    <legend>Datos generales</legend>
+                    <div class="wrapper-grdi-form pb-20">
+                        <mat-slide-toggle #active formControlName="active" class="flex-justify-end">Activo</mat-slide-toggle>
+                    </div>
+                    <div class="wrapper-grid-form-1-2">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Nombre </mat-label>
+                            <input #name formControlName="name" matInput type="text" placeholder="Ej. Termo 200ML" id="nameSup" name="nameSup">
+                            <mat-error *ngIf="hasError(SupplieForm.controls.name,'required')">{{getErrorMessage('name')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Descripción </mat-label>
+                            <input #description formControlName="description" matInput type="text" placeholder="Ej. Termo para agua">
+                            <mat-error *ngIf="hasError(SupplieForm.controls.description,'required')">{{getErrorMessage('description')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="wrapper-grid-form">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Presentación</mat-label>
+                            <mat-select #presentation formControlName="presentation" name="food">
+                                <mat-option *ngFor="let food of foods" [value]="food.value">
+                                    {{food.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="hasError(SupplieForm.controls.presentation,'required')">{{getErrorMessage('presentation')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Fabricante </mat-label>
+                            <input #manufacturer formControlName="manufacturer" matInput type="text" placeholder="Ej. Fabricante SA de CV">
+                            <mat-error *ngIf="hasError(SupplieForm.controls.manufacturer,'required')">{{getErrorMessage('manufacturer')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Costos</legend>
+                    <div class="wrapper-grid-form">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Precio unitario </mat-label>
+                            <input #unit_price formControlName="unit_price" matInput type="number" placeholder="Ej. 100.50">
+                            <mat-error *ngIf="hasError(SupplieForm.controls.unit_price,'required')">{{getErrorMessage('unit_price')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Precio público </mat-label>
+                            <input #public_price formControlName="public_price" matInput type="number" placeholder="Ej. 200.00">
+                            <mat-error *ngIf="hasError(SupplieForm.controls.public_price,'required')">{{getErrorMessage('public_price')}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </mat-card-content>
+    <mat-card-actions class="mb-20" align="end">
+        <button [routerLink]="['/admin/supplies']" mat-raised-button style="margin-right: 5px;">Regresar</button>
+        <button mat-raised-button color="primary" style="margin-right: 5px;" (click)="ValidateForm()">Guardar</button>
+    </mat-card-actions>
+</mat-card>
+

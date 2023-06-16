@@ -1,0 +1,27 @@
+<mat-card class="mb-20">
+    <mat-card-content>
+        <div>
+            <fieldset>
+                <legend>Filtros de búsqueda</legend>
+                <div class="wrapper-grid-form">
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Nombre </mat-label>
+                        <input matInput type="text" placeholder="Ej. Luis Ernesto">
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Apellido paterno </mat-label>
+                        <input matInput type="text" placeholder="Ej. Sanchéz">
+                    </mat-form-field>
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Apellido materno </mat-label>
+                        <input matInput type="text" placeholder="Ej. López">
+                    </mat-form-field>
+                </div>
+            </fieldset>
+        </div>
+    </mat-card-content>
+    <mat-card-actions class="mb-20" align="end">
+        <button [routerLink]="['/login']" mat-raised-button style="margin-right: 5px;">Limpiar filtros</button>
+        <button mat-raised-button color="primary" style="margin-right: 5px;">Buscar</button>
+    </mat-card-actions>
+</mat-card>

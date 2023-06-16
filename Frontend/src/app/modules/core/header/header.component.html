@@ -1,0 +1,18 @@
+<mat-toolbar color="primary" style="position: fixed; z-index: 100;">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+    (click)="HideSidebar()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>Panel Administrativo</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon example-header-image" [matMenuTriggerFor]="afterMenu">
+    </button>
+    <mat-menu #afterMenu="matMenu" xPosition="after">
+        <button mat-menu-item (click)="Account()">
+            <mat-icon>settings</mat-icon> Cuenta
+        </button>
+        <button mat-menu-item>
+            <mat-icon>logout</mat-icon> Cerrar sesión
+        </button>
+    </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,60 @@
+<mat-drawer-container class="sidebar-container" hasBackdrop="true" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+        <nav>
+            <ul>
+                <li>Dashboard</li>
+                <li>Productos</li>
+                <li>Paquetes</li>
+                <li>Entradas</li>
+                <li>Salidas</li>
+                <li>Existencias</li>
+                <li>Ventas</li>
+                <li>Usuarios</li>
+            </ul>
+        </nav>
+        <!--<p>Auto-resizing sidenav</p>
+        <mat-nav-list>
+            <mat-list-item [activated]="true">
+                <mat-icon class="mr-5">dashboard</mat-icon>
+                Dashboard
+            </mat-list-item>
+            <mat-expansion-panel [class.mat-elevation-z0]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon class="mr-5">dashboard</mat-icon> Mobile Phone
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-nav-list>
+                    <a mat-list-item routerLink="#">
+                        <mat-icon class="mr-5">apple</mat-icon><span>iOS</span>
+                    </a>
+                    <a mat-list-item routerLink="#">
+                        <mat-icon class="mr-5">android</mat-icon><span>Android</span>
+                    </a>
+                </mat-nav-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel [class.mat-elevation-z0]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon class="mr-5">dashboard</mat-icon> Mobile Phone
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-nav-list>
+                    <a mat-list-item routerLink="#">
+                        <mat-icon class="mr-5">apple</mat-icon><span>iOS</span>
+                    </a>
+                    <a mat-list-item routerLink="#">
+                        <mat-icon class="mr-5">android</mat-icon><span>Android</span>
+                    </a>
+                </mat-nav-list>
+            </mat-expansion-panel>
+        </mat-nav-list>-->
+    </mat-drawer>
+  
+    <div class="sidenav-content">
+        <app-header (sendHideSidebar)="ValidateHideSidebar($event)"></app-header>
+
+        <!--main content-->
+    </div>
+  
+</mat-drawer-container>

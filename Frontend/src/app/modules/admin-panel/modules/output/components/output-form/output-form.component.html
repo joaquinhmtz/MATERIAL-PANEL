@@ -1,0 +1,94 @@
+<mat-card>
+    <mat-card-header>
+        Nueva salida
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div>
+            <form action="">
+                <fieldset>
+                    <legend>Datos de almacén</legend>
+                    <div class="wrapper-grid-form-col-2">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Almacén</mat-label>
+                            <mat-select name="food">
+                                <mat-option *ngFor="let food of foods" [value]="food.value">
+                                    {{food.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Concepto</mat-label>
+                            <mat-select name="food">
+                                <mat-option *ngFor="let food of foods" [value]="food.value">
+                                    {{food.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Listado de productos</legend>
+                    <div class="wrapper-grid-form-search-act">
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Producto</mat-label>
+                            <mat-select name="food">
+                                <mat-option *ngFor="let food of foods" [value]="food.value">
+                                    {{food.viewValue}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" appearance="fill">
+                            <mat-label>Cantidad </mat-label>
+                            <input matInput type="number" placeholder="Ej. 10">
+                        </mat-form-field>
+                        <div class="flex-center-end">
+                            <button mat-raised-button color="accent">
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                      
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="position">
+                          <th mat-header-cell *matHeaderCellDef> No. </th>
+                          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef> Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="weight">
+                          <th mat-header-cell *matHeaderCellDef> Weight </th>
+                          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        </ng-container>
+                      
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="symbol">
+                          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </fieldset>
+            </form>
+        </div>
+    </mat-card-content>
+    <mat-card-actions class="mb-20" align="end">
+        <button [routerLink]="['/login']" mat-raised-button style="margin-right: 5px;">Regresar</button>
+        <button mat-raised-button color="primary" style="margin-right: 5px;">Guardar</button>
+    </mat-card-actions>
+</mat-card>
+
+

@@ -1,0 +1,35 @@
+.column-3 
+    flex: 0 0 33.333333%
+    max-width: 33.333333%
+
+.wrapper-grid-form,
+.wrapper-grid-form-col-2,
+.wrapper-grid-form-1-2,
+.wrapper-grid-form-search-act
+    max-width: 100%
+    margin: 0 auto
+    display: grid
+    grid-gap: 1.3rem
+
+/* Screen larger than 600px? 2 column */
+@media (min-width: 600px) 
+    .wrapper-grid-form,
+    .wrapper-grid-form-1-2
+        grid-template-columns: repeat(2, 1fr)
+
+    .wrapper-grid-form-search-act
+        grid-template-columns: repeat(2, 1fr)
+
+/* Screen larger than 900px? 3 columns */
+@media (min-width: 900px)
+    .wrapper-grid-form 
+        grid-template-columns: repeat(3, 1fr)
+
+    .wrapper-grid-form-1-2
+        grid-template-columns: 1fr 2fr
+
+    .wrapper-grid-form-search-act
+        grid-template-columns: 2fr 1fr 1fr .5fr
+
+    .wrapper-grid-form-col-2
+         grid-template-columns: repeat(2, 1fr)

@@ -1,0 +1,43 @@
+@import src/assets/sass/global
+
+.wrapper-code-verify
+    width: $width-100
+    height: $height-100vh
+
+.container-verify-code
+    width: 30%
+    min-width: 300px
+
+mat-card-header
+    padding: 0 0
+
+.wrapper-code-verification
+    font-size: 1.5rem
+    text-align: center
+    box-sizing: border-box
+
+.form-code-verification
+    display: flex
+    margin-top: 20px
+
+.input-code 
+    margin: 0 5px
+    text-align: center
+    line-height: 55px
+    font-size: 50px
+    border: solid 1px #ccc
+    box-shadow: 0 0 5px #ccc inset
+    outline: none
+    width: 20%
+    transition: all .2s ease-in-out
+    border-radius: 6px
+
+    &:focus 
+        border-color: #7eb1e3
+        box-shadow: 0 0 5px #398bdc inset
+      
+    &::selection
+        background: transparent
+
+.subtitle-text
+    color: rgba(0, 0, 0, .38)

@@ -1,0 +1,39 @@
+<mat-grid-list class="flex-center-center" [cols]="breakpoint" (window:resize)="onResize($event)">
+    <mat-grid-tile *ngIf="!flags.gridHide">
+        <img class="login-img" src="assets/images/login-wallpaper.jpg" alt="">
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div class="form-login">
+            <form>
+                <h2 class="text-center mb-30">Iniciar sesión</h2>
+
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Correo electrónico </mat-label>
+                    <input matInput type="email" placeholder="Ej. susana.gomez@hotmail.com">
+                </mat-form-field>
+                
+                <mat-form-field class="full-width" appearance="fill" style="margin-bottom: -10px;">
+                    <mat-label>Contraseña </mat-label>
+                    <input matInput [type]="flags.hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix (click)="flags.hide = !flags.hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="flags.hide">
+                        <mat-icon>{{flags.hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <div class="full-width mb-30">
+                    <a class="ml-10" href="">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <div class="full-width mb-40">
+                    <button class="full-width ml-10 mt-10" mat-raised-button color="primary">Entrar</button>
+                </div>
+
+                <mat-divider class="ml-10"></mat-divider>
+
+                <div class="text-center mt-10">
+                    <span>¿No tienes cuenta aún? </span> <a [routerLink]="['/register']"> Regístrate</a>
+                </div>
+            </form>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
