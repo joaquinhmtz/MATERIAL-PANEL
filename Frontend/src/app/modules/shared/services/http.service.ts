@@ -5,7 +5,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BehaviorSubject, Observable  } from 'rxjs';
 
-import { environment } from 'src/environments/enviroment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
