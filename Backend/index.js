@@ -19,7 +19,6 @@ app.secret = config.secret;
 
 async function ConnectDB () {
     try {
-        console.log('config: ', config.db.url)
         let connection = await mongoose.connect(config.db.url);
 
         if (connection != null || connection != undefined) 
