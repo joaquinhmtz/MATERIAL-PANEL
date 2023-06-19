@@ -15,3 +15,14 @@ export class SupplieEntrieClass {
         public expiredDate: Date
     ) {}
 }
+
+export class SupplieListClass {
+    constructor(
+        public index: number,
+        public _id: string, 
+        public name: string, 
+        public description: string, 
+        public presentation: object,
+        public public_price: number
+    ) {}
+}

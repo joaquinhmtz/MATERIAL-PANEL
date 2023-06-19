@@ -17,10 +17,11 @@ export class SupplieFormComponent implements OnInit {
   public flags : any = {
     submitted : false
   };
-  public foods: any = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
+  public presentations: any = [
+    {
+      key: 'piece', 
+      name: 'Pieza'
+    }
   ];
   public VALIDATIONS = {
     required: (control: FormControl) => {

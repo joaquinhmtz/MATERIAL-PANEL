@@ -24,7 +24,7 @@ function SupplieCountList (data) {
             
             let pipeline = [];
             pipeline.push({ $match : query });
-			pipeline.push({ $sort : { name : -1 } });
+			pipeline.push({ $sort : { name : 1 } });
 			
 			let pipelineCount = cloneDeep(pipeline);
 			pipelineCount.push({ $count: 'total' });
@@ -44,7 +44,7 @@ function SupplieList (data) {
     return new Promise(async (resolve, reject) => {
 		try {
 			let query = await SupplieHelper.GetQuerySupplieList(data);
-            
+
             let pipeline = [];
             pipeline.push({ $match : query });
             pipeline.push({ 
@@ -52,12 +52,12 @@ function SupplieList (data) {
 					_id : "$_id",
 					name : "$name",
                     description : "$description",
-                    unit_price : "$unit_price",
+					presentation : "$presentation",
                     public_price : "$public_price"
 				}
 			});
 
-			let list = await SupplieModel.aggregate(pipeline).sort({ name : -1 })
+			let list = await SupplieModel.aggregate(pipeline).sort({ name : 1 })
             if (list) resolve(list);
 
 		} catch (e) {

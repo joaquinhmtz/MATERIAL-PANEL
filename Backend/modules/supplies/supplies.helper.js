@@ -9,6 +9,14 @@ function GetQuerySupplieList (data) {
 		}];
     }
 
+    if (data.description != undefined || data.searchName != '') {
+        query['$or'] = [{
+			'name': new RegExp(data.description, 'i')
+		}, {
+			'description': new RegExp(data.description, 'i')
+		}];
+    }
+
     return query;
 }
 
