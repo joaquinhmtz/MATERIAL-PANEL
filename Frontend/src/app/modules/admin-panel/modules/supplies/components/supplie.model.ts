@@ -1,6 +1,7 @@
 export interface Supplie {
     _id: string;
     name: string;
+    tempName: string;
     description: string;
     unit_price: number;
     public_price: number;

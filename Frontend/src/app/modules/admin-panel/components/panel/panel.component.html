@@ -6,46 +6,46 @@
             </div>
             <mat-divider></mat-divider>
             <ul>
-                <li>
+                <!-- <li>
                     <a href="">
                         <mat-icon class="mr-10">dashboard</mat-icon> Dashboard
                     </a>
-                </li>
-                <li>
-                    <a [routerLink]="['/admin/supplies']">
+                </li> -->
+                <li [routerLink]="['/admin/supplies']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a>
                         <mat-icon class="mr-10">category</mat-icon> Productos
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="">
                         <mat-icon class="mr-10">inventory_2</mat-icon> Paquetes
                     </a>
-                </li>
-                <li>
-                    <a [routerLink]="['/admin/entries']">
+                </li> -->
+                <li  [routerLink]="['/admin/entries']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a>
                         <mat-icon class="mr-10">local_shipping</mat-icon> Entradas
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a [routerLink]="['/admin/outputs']">
                         <mat-icon class="mr-10">rocket</mat-icon> Salidas
                     </a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a href="">
                         <mat-icon class="mr-10">pallet</mat-icon> Existencias
                     </a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a href="">
                         <mat-icon class="mr-10">sell</mat-icon> Ventas
                     </a>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <a [routerLink]="['/admin/users']">
                         <mat-icon class="mr-10">manage_accounts</mat-icon> Usuarios
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <!-- <p>Auto-resizing sidenav</p>

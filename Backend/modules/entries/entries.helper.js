@@ -5,6 +5,10 @@ function GetQueryEntrieList (data) {
         query['folio'] = new RegExp(data.searchName, 'i');
     }
 
+    if (data.folio != '' || data.folio != undefined) {
+        query['folio'] = new RegExp(data.folio, 'i');
+    }
+
     return query;
 }
 

@@ -9,7 +9,7 @@
         <mat-icon>add</mat-icon>
     </div>
 </div>
-<app-entrie-home-filters *ngIf="flags.showFilters"></app-entrie-home-filters>
+<app-entrie-home-filters [reloadList]="reloadList" (entrieFilters)="CatchFilters($event)" *ngIf="flags.showFilters"></app-entrie-home-filters>
 <mat-card>
     <mat-card-header>
         Listado de entradas
@@ -21,29 +21,48 @@
                 <legend>Resultados [{{tableData.dataSourceCount}}]</legend>
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                    <!--- Note that these columns can be defined in any order.
-                          The actual rendered columns are set as a property on the row definition" -->
-                  
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="_id">
-                      <th mat-header-cell *matHeaderCellDef> No. </th>
-                      <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                    <ng-container matColumnDef="index">
+                        <th mat-header-cell *matHeaderCellDef> No. </th>
+                        <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
                     </ng-container>
                   
-                    <!-- Name Column -->
                     <ng-container matColumnDef="folio">
-                      <th mat-header-cell *matHeaderCellDef> Name </th>
-                      <td mat-cell *matCellDef="let element"> {{element.folio}} </td>
+                        <th mat-header-cell *matHeaderCellDef> Folio </th>
+                        <td mat-cell *matCellDef="let element"> {{element.folio}} </td>
                     </ng-container>
                   
-                    <!-- Weight Column -->
                     <ng-container matColumnDef="creation_date">
-                      <th mat-header-cell *matHeaderCellDef> Weight </th>
-                      <td mat-cell *matCellDef="let element"> {{element.creation_date}} </td>
+                        <th mat-header-cell *matHeaderCellDef> Fecha creación </th>
+                        <td mat-cell *matCellDef="let element"> {{element.creation_date | date : "dd/MM/YYYY"}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="quantity">
+                        <th mat-header-cell *matHeaderCellDef> Cantidades </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="flex-column flex-align-start">
+                                <div class="flex-center-between full-width">
+                                    <div><span class="font-weight500">Piezas: </span></div>
+                                    <div>{{ element.totalQuantity }}</div>
+                                </div>
+                                <div class="flex-center-between full-width">
+                                    <div><span class="font-weight500">Productos: </span></div>
+                                    <div>{{ element.totalSupplies }}</div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef> Acciones </th>
+                        <td class="text-center" mat-cell *matCellDef="let element">
+                            <button mat-button color="warn">
+                                <mat-icon style="margin-right: 0;">delete</mat-icon>
+                            </button>
+                        </td>
                     </ng-container>
                   
                     <tr mat-header-row *matHeaderRowDef="tableData.displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: tableData.displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: tableData.displayedColumns; let i = index"></tr>
                 </table>
             </fieldset>
         </div>

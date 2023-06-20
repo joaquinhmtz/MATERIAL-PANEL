@@ -27,11 +27,17 @@ const EntrieOperationStock = async function (supplie, callback) {
     let lot;
     let query;
     let updateQuery;
-    let expiredDateTemp = new Date(supplie.expiredDate);
+    let expiredDateTemp = (supplie.expiredDate !== 'N/A' ? new Date(supplie.expiredDate) : new Date());
     let expiredDateFinal = new Date(expiredDateTemp.getFullYear(), expiredDateTemp.getMonth(), expiredDateTemp.getDate());
+    supplie['appliedExpiredDate'] = (supplie.expiredDate !== 'N/A' ? true : false);
+    supplie['expiredDate'] = (supplie.expiredDate !== 'N/A' ? new Date(supplie.expiredDate) : new Date());
+
     let searchLote = await SupplieLib.SearchLoteSupplie({ suppliedId : supplie._id });
-    if (searchLote && searchLote.exists) lot = await LotModel.find({ _id : searchLote.lot._id, expiredDate : expiredDateFinal });
-    else lot = await ExtraLib.CreateLot({ suppliedId : supplie._id, expiredDate : expiredDateFinal });
+    if (searchLote && searchLote.exists) {
+        if (supplie.appliedExpiredDate === true) lot = await LotModel.find({ _id : searchLote.lot._id, expiredDate : expiredDateFinal });
+        else lot = await LotModel.find({ _id : searchLote.lot._id, appliedExpiredDate : false });
+    }
+    else lot = await ExtraLib.CreateLot({ suppliedId : supplie._id, expiredDate : expiredDateFinal, appliedExpiredDate : supplie.appliedExpiredDate });
 
     query = {
         "_id": (Array.isArray(lot) ? lot[0]._id : lot._id),
@@ -73,7 +79,6 @@ function EntrieAddStock(data) {
 function EntrieCountList (data) {
     return new Promise(async (resolve, reject) => {
 		try {
-            console.log('qijsiwqjsi')
 			let query = await EntrieHelper.GetQueryEntrieList(data);
             
             let pipeline = [];
@@ -107,6 +112,8 @@ function EntrieList (data) {
 					folio : "$folio",
                     supplies : "$supplies",
                     creation_date : "$creation_date",
+                    totalSupplies : { $size : "$supplies" },
+                    totalQuantity : { $sum : "$supplies.quantity" }
 				}
 			});
 

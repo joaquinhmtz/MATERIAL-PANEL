@@ -8,6 +8,7 @@ let Supplie = new Schema({
     description             : { type : String, trim : true },
     quantity                : { type : Number, default : 0 },
     expiredDate             : { type : Date },
+    appliedExpiredDate      : { type : Boolean }
 });
 
 let User = new Schema({

@@ -51,7 +51,7 @@ export class EntrieFormComponent implements OnInit {
     {value: 'tacos-2', viewValue: 'Tacos'},
   ];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['index', 'name', 'description', 'expirationDate', 'quantity', 'actions'];
 
   constructor(
     public Swal?: SweetAlert2Service,
@@ -105,34 +105,39 @@ export class EntrieFormComponent implements OnInit {
     this.http?.HTTP_POST('/api/v1/entries/new', this.EntrieForm.value)
       .subscribe((res: any) => {
         this.Swal?.close();
-        this.Swal?.success('Entrada guardada', '');
-        this.router?.navigate(['admin/entries']);
+        this.Swal?.success('Entrada guardada', '', (res: any) => {
+          this.router?.navigate(['admin/entries']);
+        });
       }, (err: any) => this.Swal?.error('¡Ops, ocurrió un error!', 'Ocurrió un error al guardar la entrada.'));
   }
 
   AddProduct() {
-    if (this.returnValue('productName') && this.returnValue('quantity') && this.returnValue('expiredDate')) {
+    if (this.returnValue('productName') && this.returnValue('quantity')) {
       this.EntrieForm.value['supplies'].push({ 
         _id : this.returnValue('productName')._id,  
         name : this.returnValue('productName').name,
         description : this.returnValue('productName').description,
         quantity : this.returnValue('quantity'),
-        expiredDate : this.returnValue('expiredDate')
+        expiredDate : ((this.returnValue('expiredDate') !== null && this.returnValue('expiredDate') !== undefined) ? this.returnValue('expiredDate') : 'N/A')
       });
       this.supplieListTemp.push(new SupplieEntrieClass(
         this.returnValue('productName')._id,  
         this.returnValue('productName').name,
         this.returnValue('productName').description,
         this.returnValue('quantity'),
-        this.returnValue('expiredDate'))
+        ((this.returnValue('expiredDate') !== null && this.returnValue('expiredDate') !== undefined) ? this.returnValue('expiredDate') : 'N/A'))
       );
       this.dataSource = new MatTableDataSource<Supplie>(this.supplieListTemp);
       this.EntrieForm.controls['productName'].setValue(undefined);
       this.EntrieForm.controls['quantity'].setValue(undefined);
       this.EntrieForm.controls['expiredDate'].setValue(undefined);
-
-      console.log('sup: ', this.supplieListTemp)
     }
+  }
+
+  DeleteSupplie(index: number) {
+    this.EntrieForm.value['supplies'].splice(index, 1);
+    this.supplieListTemp.splice(index, 1);
+    this.dataSource = new MatTableDataSource<Supplie>(this.supplieListTemp);
   }
 
   GetSupplieList() {
@@ -140,8 +145,11 @@ export class EntrieFormComponent implements OnInit {
       this.http?.HTTP_POST('/api/v1/supplies/list', { })
       .subscribe(res => {
 
-        for (let i = 0; i < res.list.length; i++)
+        for (let i = 0; i < res.list.length; i++) {
+          res.list[i].tempName = '';
+          res.list[i].tempName = (res.list[i].name + ' - ' + res.list[i].description);
           this.supplieList.push(res.list[i])
+        }
 
         resolve( true );
       });

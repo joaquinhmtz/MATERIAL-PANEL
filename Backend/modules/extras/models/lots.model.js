@@ -9,12 +9,13 @@ const ProjectModel = new Schema([{
 }]);
 
 const LotModel = new Schema({
-	code            : { type : String, trim : true, uppercase : true },
-	suppliedId      : { type : Schema.Types.ObjectId , ref : 'supplies' },
-	name 			: { type : String, trim : true, uppercase : true },
-	expiredDate     : { type: Date },
-	active 			: { type : Boolean, default : true },
-	projects        : [ProjectModel]
+	code            		: { type : String, trim : true, uppercase : true },
+	suppliedId      		: { type : Schema.Types.ObjectId , ref : 'supplies' },
+	name 					: { type : String, trim : true, uppercase : true },
+	expiredDate     		: { type: Date },
+	appliedExpiredDate 		: { type : Boolean },
+	active 					: { type : Boolean, default : true },
+	projects        		: [ProjectModel]
 });
 
 module.exports = mongoose.model('lots', LotModel);

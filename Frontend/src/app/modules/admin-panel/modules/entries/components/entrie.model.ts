@@ -10,6 +10,8 @@ export class Entrie {
     constructor(
         public _id: string, 
         public folio: string, 
-        public creation_date: Date
+        public creation_date: Date,
+        public totalQuantity: number,
+        public totalSupplies: number
     ) {}
 }

@@ -13,7 +13,8 @@ function CreateLot (data) {
                     _id : '648b92d4c48148b419bf0dde',
                     stock : 0,
                     transit : 0
-                }]
+                }],
+                appliedExpiredDate : data.appliedExpiredDate
             };
             let obj = new LotModel(defaultData);
             let save = await obj.save();
