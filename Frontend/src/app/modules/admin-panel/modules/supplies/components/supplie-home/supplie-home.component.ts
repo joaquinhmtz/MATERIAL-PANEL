@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { SweetAlert2Service } from 'src/app/modules/shared/services/sweet-alert2.service';
 import { HttpService } from 'src/app/modules/shared/services/http.service';
@@ -30,6 +31,7 @@ export class SupplieHomeComponent implements OnInit {
   constructor(
     public Swal?: SweetAlert2Service,
     private http?: HttpService,
+    private router?: Router
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +56,32 @@ export class SupplieHomeComponent implements OnInit {
       }, (err: any) => this.Swal?.error('¡Ops, ocurrió un error!', 'Ocurrió un error al obtener el listado de productos.'));
   }
 
+  GoToEdit(supplie: any) {
+    this.router?.navigate(['admin', 'supplies', 'edit'], { queryParams: { supplie: supplie } });
+  }
+
+  DeleteSupplie(supplie: any) {
+
+    this.Swal?.confirm(
+      'Eliminar producto',
+      '¿Seguro que quieres eliminar el producto ' + supplie.name + '?',
+      true,
+      (response: any) => {
+        if (response.value) {
+          this.Swal?.loading();
+
+          this.http?.HTTP_POST('/api/v1/supplies/delete', supplie)
+            .subscribe(res => {
+              this.Swal?.close();
+              this.Swal?.success('Producto eliminado', '', (res: any) => {
+                this.ReloadSupplieList();
+              });
+            });
+        }
+      }
+    )
+  }
+
   ReloadSupplieList() {
     this.reloadList.next(true);
   }
@@ -64,11 +92,6 @@ export class SupplieHomeComponent implements OnInit {
 
   ShowFilters() {
     this.flags.showFilters = !this.flags.showFilters;
-    if (this.flags.showFilters) {
-      /*setTimeout(() => {
-        this.field.nativeElement.focus();
-      }, 300);*/
-    }
   }
 
 }

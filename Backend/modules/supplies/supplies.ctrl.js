@@ -27,7 +27,49 @@ const SupplieList = async (req, res) => {
     }
 }
 
+const SuppliegetById = async (req, res) => {
+    try {
+		let data = req.query;
+		let supplie = await SupplieLib.SuppliegetById(data._id);
+
+		res.status(200).send({ msg: 'OK', supplie : supplie });
+	} catch (e) {
+		console.log(e)
+        throw new Error(e)
+    }
+}
+
+const SupplieUpdate = async (req, res) => {
+    try {
+		let data = req.body;
+		let upd = await SupplieLib.SupplieUpdate(data);
+
+		if (upd) res.status(200).send({ msg: 'OK' });
+		else res.status(200).send({ msg: 'NOT_OK' });
+	} catch (e) {
+		console.log(e)
+        throw new Error(e)
+    }
+}
+
+const SupplieDelete = async (req, res) => {
+    try {
+		let data = req.body;
+		data['active'] = false;
+		let upd = await SupplieLib.SupplieUpdate(data);
+
+		if (upd) res.status(200).send({ msg: 'OK' });
+		else res.status(200).send({ msg: 'NOT_OK' });
+	} catch (e) {
+		console.log(e)
+        throw new Error(e)
+    }
+}
+
 module.exports = {
     SupplieNew,
-    SupplieList
+    SupplieList,
+	SuppliegetById,
+	SupplieUpdate,
+	SupplieDelete
 };

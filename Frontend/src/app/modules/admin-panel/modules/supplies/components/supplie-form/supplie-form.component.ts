@@ -15,7 +15,8 @@ export class SupplieFormComponent implements OnInit {
   public SupplieForm: any;
 
   public flags : any = {
-    submitted : false
+    submitted : false,
+    action : 'create'
   };
   public presentations: any = [
     {
@@ -23,6 +24,7 @@ export class SupplieFormComponent implements OnInit {
       name: 'Pieza'
     }
   ];
+  public title: any = 'Nuevo producto';
   public VALIDATIONS = {
     required: (control: FormControl) => {
       const value = control.value;
@@ -40,6 +42,37 @@ export class SupplieFormComponent implements OnInit {
 
   ngOnInit() : void {
     this.InitForm();
+    this.activatedRoute?.queryParamMap.subscribe( (res:any) => {
+      let params: any = res.params;
+      if (params.supplie != null || params.supplie != undefined) {
+        this.title = 'Editar producto';
+        this.flags.action = 'update';
+        this.GetSupplieById(params.supplie);
+      }
+    });
+  }
+
+  GetSupplieById(supplieId: any) {
+    this.Swal?.loading();
+
+    this.http?.HTTP_GET('/api/v1/supplies/get', { _id : supplieId })
+      .subscribe((res: any) => {
+        this.Swal?.close();
+        this.SetValues(res.supplie);
+      }, (err: any) => this.Swal?.error('¡Ops, ocurrió un error!', 'Ocurrió un error al obtener la información del producto.'));
+  }
+
+  SetValues(supplie: any) {
+    this.SupplieForm.setValue({
+      _id : supplie._id,
+      name : supplie.name,
+      description : supplie.description,
+      unit_price : supplie.unit_price,
+      public_price : supplie.public_price,
+      presentation : supplie.presentation?.key,
+      manufacturer : supplie.manufacturer,
+      active : supplie.active
+    });
   }
 
   ValidateForm() {
@@ -50,14 +83,17 @@ export class SupplieFormComponent implements OnInit {
   }
 
   SendForm() {
-    console.log('send form**');
     this.Swal?.loading();
 
-    this.http?.HTTP_POST('/api/v1/supplies/new', this.SupplieForm.value)
+    let url = (this.flags.action === 'create' ? '/api/v1/supplies/new' : '/api/v1/supplies/update');
+    this.SupplieForm.controls['presentation'].setValue(this.presentations[0]);
+
+    this.http?.HTTP_POST(url, this.SupplieForm.value)
       .subscribe((res: any) => {
         this.Swal?.close();
-        this.Swal?.success('Producto guardado', '');
-        this.router?.navigate(['admin/supplies']);
+        this.Swal?.success('Producto guardado', '', (res: any) => {
+          this.router?.navigate(['admin/supplies']);
+        });
       }, (err: any) => this.Swal?.error('¡Ops, ocurrió un error!', 'Ocurrió un error al guardar el producto.'));
   }
 

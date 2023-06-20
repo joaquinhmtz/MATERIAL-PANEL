@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'new',
     component: SupplieFormComponent,
+  },
+  {
+    path: 'edit',
+    component: SupplieFormComponent,
   }
 ]
 

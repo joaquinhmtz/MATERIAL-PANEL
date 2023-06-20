@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-        Nuevo producto
+        {{title}}
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -27,7 +27,7 @@
                         <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Presentación</mat-label>
                             <mat-select #presentation formControlName="presentation" name="presentation">
-                                <mat-option *ngFor="let item of presentations" [value]="item">
+                                <mat-option *ngFor="let item of presentations" [value]="item.key">
                                     {{item.name}}
                                 </mat-option>
                             </mat-select>

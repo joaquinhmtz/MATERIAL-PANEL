@@ -17,6 +17,8 @@ function GetQuerySupplieList (data) {
 		}];
     }
 
+    query['active'] = true;
+
     return query;
 }
 

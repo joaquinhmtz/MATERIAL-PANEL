@@ -3,6 +3,8 @@ const SupplieHelper   = require('./supplies.helper');
 const LotModel		  = require('./../extras/models/lots.model');
 const UtilHelper	  = require('./../../utils/scripts/utils-global');
 const cloneDeep       = require('lodash').cloneDeep;
+const mongoose        = require('mongoose');
+const suppliesModel = require('./supplies.model');
 
 function SupplieNew(data) {
 	return new Promise(async (resolve, reject) => {
@@ -66,6 +68,30 @@ function SupplieList (data) {
 	});
 }
 
+function SuppliegetById (_id) {
+    return new Promise(async (resolve, reject) => {
+		try {
+			let supplie = await SupplieModel.findOne({ _id : new mongoose.Types.ObjectId(_id) });
+
+			resolve(supplie);
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
+function SupplieUpdate(data) {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let supplie = await suppliesModel.updateOne({ _id : new mongoose.Types.ObjectId(data._id) }, { $set : data });
+
+            if (supplie) resolve(true);
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
 /** FUNCTIONS USED IN THE OTHER MODULES **/
 function SearchLoteSupplie (data) {
 	return new Promise (async (resolve, reject) => {
@@ -83,5 +109,7 @@ module.exports = {
     SupplieNew,
     SupplieCountList,
     SupplieList,
-	SearchLoteSupplie
+	SuppliegetById,
+	SupplieUpdate,
+	SearchLoteSupplie,
 };
