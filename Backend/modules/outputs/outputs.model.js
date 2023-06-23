@@ -3,12 +3,9 @@ const Schema = mongoose.Schema;
 
 let Supplie = new Schema({
     _id                     : { type : Schema.Types.ObjectId },
-    folio                   : { type : String, trim : true },
     name                    : { type : String, trim : true },
     description             : { type : String, trim : true },
     quantity                : { type : Number, default : 0 },
-    unit_price              : { type : Number, default : 0 },
-    public_price            : { type : Number, default : 0 },
 });
 
 let User = new Schema({

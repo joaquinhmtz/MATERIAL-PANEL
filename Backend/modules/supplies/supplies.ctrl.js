@@ -64,6 +64,7 @@ const SupplieDelete = async (req, res) => {
 		console.log(e)
         throw new Error(e)
     }
+
 }
 
 module.exports = {

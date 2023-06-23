@@ -5,6 +5,9 @@
     <div class="btn-action" title="Refrescar">
         <mat-icon>autorenew</mat-icon>
     </div>
+    <div class="btn-action" title="Nuevo producto" [routerLink]="['/admin/outputs/new']">
+        <mat-icon>add</mat-icon>
+    </div>
 </div>
 <app-output-home-filters *ngIf="flags.showFilters"></app-output-home-filters>
 <mat-card>

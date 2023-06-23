@@ -5,78 +5,99 @@
     <mat-divider></mat-divider>
     <mat-card-content>
         <div>
-            <form action="">
+            <form [formGroup]="OutputForm">
                 <fieldset>
                     <legend>Datos de almacén</legend>
-                    <div class="wrapper-grid-form-col-2">
-                        <mat-form-field class="full-width" appearance="fill">
+                    <div class="">
+                        <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Almacén</mat-label>
-                            <mat-select name="food">
-                                <mat-option *ngFor="let food of foods" [value]="food.value">
-                                    {{food.viewValue}}
+                            <mat-select #project formControlName="project" id="projectId" name="projectName">
+                                <mat-option *ngFor="let item of projects" [value]="item._id">
+                                    {{item.name}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="hasError(OutputForm.controls.project,'required')">{{getErrorMessage('project')}}</mat-error>
                         </mat-form-field>
-                        <mat-form-field class="full-width" appearance="fill">
-                            <mat-label>Concepto</mat-label>
-                            <mat-select name="food">
-                                <mat-option *ngFor="let food of foods" [value]="food.value">
-                                    {{food.viewValue}}
+                    </div>
+                    <div class="wrapper-grid-form-col-2">
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Pago</mat-label>
+                            <mat-select #payment formControlName="payment" id="paymentId" name="paymentName">
+                                <mat-option *ngFor="let item of payments" [value]="item.key">
+                                    {{item.name}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="hasError(OutputForm.controls.payment,'required')">{{getErrorMessage('payment')}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="full-width" appearance="outline">
+                            <mat-label>Concepto</mat-label>
+                            <mat-select #type formControlName="type" id="typeId" name="typeName">
+                                <mat-option *ngFor="let item of types" [value]="item.key">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="hasError(OutputForm.controls.type,'required')">{{getErrorMessage('type')}}</mat-error>
                         </mat-form-field>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend>Listado de productos</legend>
                     <div class="wrapper-grid-form-search-act">
-                        <mat-form-field class="full-width" appearance="fill">
+                        <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Producto</mat-label>
-                            <mat-select name="food">
-                                <mat-option *ngFor="let food of foods" [value]="food.value">
-                                    {{food.viewValue}}
+                            <mat-select #productName formControlName="productName" placeholder="Producto">
+                                <mat-option>
+                                    <ngx-mat-select-search placeholder="Buscar producto" formControlName="searchName" [searching]="flags.searching"
+                                    placeholderLabel="Escribe el nombre del producto" noEntriesFoundLabel="No se encontraron resultados">
+
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let item of filteredServerSideSupplies | async" [value]="item">
+                                    {{ item.fullname }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field class="full-width" appearance="fill">
+                        <mat-form-field class="full-width" appearance="outline">
                             <mat-label>Cantidad </mat-label>
-                            <input matInput type="number" placeholder="Ej. 10">
+                            <input #quantity formControlName="quantity" matInput type="number" placeholder="Ej. 10">
                         </mat-form-field>
                         <div class="flex-center-end">
-                            <button mat-raised-button color="accent">
+                            <button mat-raised-button color="accent" (click)="AddProduct()">
                                 Agregar
                             </button>
                         </div>
                     </div>
                     <mat-divider></mat-divider>
                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    
-                        <!--- Note that these columns can be defined in any order.
-                              The actual rendered columns are set as a property on the row definition" -->
-                      
-                        <!-- Position Column -->
-                        <ng-container matColumnDef="position">
+
+                        <ng-container matColumnDef="index">
                           <th mat-header-cell *matHeaderCellDef> No. </th>
-                          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                          <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
                         </ng-container>
                       
-                        <!-- Name Column -->
                         <ng-container matColumnDef="name">
-                          <th mat-header-cell *matHeaderCellDef> Name </th>
+                          <th mat-header-cell *matHeaderCellDef> Nombre </th>
                           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                         </ng-container>
                       
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="weight">
-                          <th mat-header-cell *matHeaderCellDef> Weight </th>
-                          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        <ng-container matColumnDef="description">
+                          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
                         </ng-container>
                       
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="symbol">
-                          <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                        <ng-container matColumnDef="quantity">
+                          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                          <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
                         </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th class="text-center" mat-header-cell *matHeaderCellDef> Acciones </th>
+                            <td class="text-center" mat-cell *matCellDef="let element; let i = index" (click)="DeleteSupplie(i)">
+                                <button mat-button color="warn">
+                                    <mat-icon style="margin-right: 0;">delete</mat-icon>
+                                </button>
+                            </td>
+                          </ng-container>
                       
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -86,8 +107,8 @@
         </div>
     </mat-card-content>
     <mat-card-actions class="mb-20" align="end">
-        <button [routerLink]="['/login']" mat-raised-button style="margin-right: 5px;">Regresar</button>
-        <button mat-raised-button color="primary" style="margin-right: 5px;">Guardar</button>
+        <button [routerLink]="['/admin/outputs']" mat-raised-button style="margin-right: 5px;">Regresar</button>
+        <button mat-raised-button color="primary" style="margin-right: 5px;" (click)="ValidateForm()">Guardar</button>
     </mat-card-actions>
 </mat-card>
 
