@@ -2,7 +2,7 @@
     <div class="btn-action" title="Mostrar filtros" (click)="ShowFilters()">
         <mat-icon>filter_alt</mat-icon>
     </div>
-    <div class="btn-action" title="Refrescar">
+    <div class="btn-action" title="Refrescar" (click)="ReloadSupplieList()">
         <mat-icon>autorenew</mat-icon>
     </div>
     <div class="btn-action" title="Nueva entrada" [routerLink]="['/admin/entries/new']">

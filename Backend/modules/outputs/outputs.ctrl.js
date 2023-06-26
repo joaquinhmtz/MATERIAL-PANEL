@@ -14,6 +14,21 @@ const OutputNew = async (req, res) => {
     }
 }
 
+const OutputList = async (req, res) => {
+    try {
+		let data = req.body;
+		let count = await OutputLib.OutputCountList(data);
+        let list = await OutputLib.OutputList(data);
+
+		if (count && list) res.status(200).send({ count : count, list : list, success : true });
+		else res.status(200).send({ msg: 'NOT_OK_OUTPUT_LIST' });
+	} catch (e) {
+		console.log(e)
+        throw new Error(e)
+    }
+}
+
 module.exports = {
-    OutputNew
+    OutputNew,
+	OutputList
 };

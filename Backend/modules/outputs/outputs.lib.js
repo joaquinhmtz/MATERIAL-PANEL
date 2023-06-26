@@ -1,9 +1,11 @@
 const OutputModel       = require('./outputs.model');
 const LotModel          = require('./../extras/models/lots.model');
 const ExtraLib          = require('./../extras/extras.lib');
+const OutputHelper      = require('./outputs.helper');
 const UtilHelper        = require('./../../utils/scripts/utils-global');
 const async             = require('async');
 const mongoose          = require('mongoose');
+const cloneDeep         = require('lodash').cloneDeep;
 
 
 function OutputNew(data) {
@@ -75,7 +77,60 @@ const OutputOperationStock = async function (data) {
     }
 }
 
+function OutputCountList (data) {
+    return new Promise(async (resolve, reject) => {
+		try {
+			let query = await OutputHelper.GetQueryOutputList(data);
+            
+            let pipeline = [];
+            pipeline.push({ $match : query });
+			pipeline.push({ $sort : { name : -1 } });
+			
+			let pipelineCount = cloneDeep(pipeline);
+			pipelineCount.push({ $count: 'total' });
+
+			let count = await OutputModel.aggregate(pipelineCount)
+            
+            if (count[0] && count[0].total) resolve(count);
+			else resolve ([{total:0}]);
+
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
+function OutputList (data) {
+    return new Promise(async (resolve, reject) => {
+		try {
+			let query = await OutputHelper.GetQueryOutputList(data);
+            
+            let pipeline = [];
+            pipeline.push({ $match : query });
+            pipeline.push({ 
+				$project: {
+					_id : "$_id",
+					folio : "$folio",
+                    payment : "$payment",
+                    supplies : "$supplies",
+                    creation_date : "$creation_date",
+                    totalSupplies : { $size : "$supplies" },
+                    totalQuantity : { $sum : "$supplies.quantity" }
+				}
+			});
+
+			let list = await OutputModel.aggregate(pipeline).sort({ folio : -1 })
+            if (list) resolve(list);
+
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
 module.exports = {
     OutputNew,
-    OutputDecrementStock
+    OutputDecrementStock,
+    OutputCountList,
+    OutputList
 };
